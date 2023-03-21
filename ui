@@ -1,0 +1,183 @@
+#import "LightView.h"
+#import "LightButton.h"
+
+#define kRow_Number 9   //行数
+
+#define kColumn_Number 8  //列数
+
+#define kButton_Width  40  //button的宽度
+
+#define kButton_Height 40  //button的高度
+
+#define kMargin_Top   100   //距上边界的距离
+
+#define kMargin_Left  25   //距左边界的距离
+
+
+
+@implementation LightView
+//重写init
+- (id)initWithFrame:(CGRect)frame
+
+{
+
+    self = [super initWithFrame:frame];
+
+    if (self) {
+
+        // Initialization code
+
+        self.lightBtnArr = [NSMutableArray array];
+
+        [self setupTitleView];
+
+        [self setupTitleLabel];
+
+        [self setupLightView];
+
+        [self setupStartButton];
+
+        [self setupRestartButton];
+
+    }
+
+    return self;
+
+}
+
+//初始化titleView
+
+- (void)setupTitleView
+
+{
+
+    UILabel *aLabel = [[UILabel alloc]initWithFrame:CGRectMake(30,20,260, 30)];
+
+    aLabel.textColor = [UIColor blackColor];
+
+    aLabel.text =@"Lights the game Endless Edition";
+
+    aLabel.textAlignment =NSTextAlignmentCenter;
+
+    [self addSubview:aLabel];
+
+    [aLabel release];
+
+}
+
+//初始化titleLabel
+
+- (void)setupTitleLabel
+
+{
+
+    self.titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,50,320,40)];
+
+    _titleLabel.textAlignment =NSTextAlignmentCenter;
+
+    _titleLabel.textColor = [UIColor blackColor];
+
+    _titleLabel.font = [UIFont systemFontOfSize:14];
+
+    _titleLabel.text =@"当前亮灯的数量为0";
+    _titleLabel.textColor = [UIColor redColor];
+
+    [self  addSubview:_titleLabel];
+
+    [_titleLabel release];
+
+}
+
+//初始化关灯界面
+
+- (void)setupLightView
+
+{
+
+   static CGFloat x =kMargin_Left;
+
+    CGFloat y =kMargin_Top;
+
+    for (int i = 0; i < kRow_Number; i++) {
+
+        for (int j =0; j <kColumn_Number; j++) {
+            UIButton *lightBtn = [UIButton  buttonWithType:UIButtonTypeCustom];
+
+
+            lightBtn.frame = CGRectMake(x, y, kButton_Width, kButton_Height);
+
+            [lightBtn setImage:[UIImage imageNamed:@"1.png"]forState:UIControlStateNormal];
+//            [lightBtn setImage:[UIImage imageNamed:@"2.png"] forState:UIControlStateSelected];
+
+            lightBtn.tag = 100 + 100 * (i + 1) + j;
+            [self addSubview:lightBtn];
+
+            x += kButton_Width;
+
+           lightBtn.selected = NO;
+
+            [self.lightBtnArr  addObject:lightBtn];
+
+        }
+
+        x = 25;
+
+        y += kButton_Height;
+
+    }
+
+}
+
+- (void)setupStartButton
+
+{  self.beginButton = [UIButton buttonWithType:UIButtonTypeSystem];
+
+    _beginButton.backgroundColor = [UIColor greenColor];
+
+    _beginButton.layer.cornerRadius=50;
+
+    _beginButton.frame =CGRectMake(40,kMargin_Top + kButton_Height * kRow_Number +30,100,100);
+
+    [_beginButton setTitle:@"开始游戏" forState:UIControlStateNormal];
+
+    [_beginButton setTitleColor:[UIColor blackColor]forState:UIControlStateNormal];
+
+    [self addSubview:_beginButton];
+
+}
+
+- (void)setupRestartButton
+
+{
+
+    self.restartButton = [UIButton buttonWithType:UIButtonTypeSystem];
+
+    _restartButton.backgroundColor = [UIColor  orangeColor];
+
+    _restartButton.layer.cornerRadius=50;
+
+    _restartButton.frame =CGRectMake(180,kMargin_Top + kButton_Height * kRow_Number +30,100,100);
+
+    [_restartButton setTitle:@"重新开始" forState:UIControlStateNormal];
+
+    [_restartButton setTitleColor:[UIColor  blackColor]forState:UIControlStateNormal];
+
+    [self addSubview:_restartButton];
+
+}
+
+- (void)dealloc
+
+{
+
+    self.restartButton =nil;
+
+    self.beginButton =nil;
+
+    self.lightBtnArr =nil;
+
+    [super dealloc];
+
+}
+
+@end
