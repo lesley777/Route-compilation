@@ -1,0 +1,34 @@
+#include<iostream>
+#include<cstdio>
+#include<windows.h>
+#include<conio.h>
+using namespace std;
+int SIZ = 20;
+HANDLE hout=GetStdHandle(STD_OUTPUT_HANDLE);
+COORD coord;
+HANDLE hCon;
+enum Color { DARKBLUE = 1, DARKGREEN, DARKTEAL, DARKRED, DARKPINK, DARKYELLOW, GRAY, DARKGRAY, BLUE, GREEN, TEAL, RED, PINK, YELLOW, WHITE };
+void SetColor(Color c) {
+    if(hCon == NULL)
+        hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hCon, c);
+}
+SYSTEMTIME sys;
+//sys.wYear,sys.wMonth,sys.wDay,sys.wHour,sys.wMinute, sys.wSecond,sys.wMilliseconds,sys.wDayOfWeek
+struct PLAYER {
+    int x,y;
+    int hp;
+    int gun;
+    int direct;
+} p1,p2;
+int map[1005][1005];
+int abs(int x) {
+    if(x < 0) return -x;
+    return x;
+}
+void locate(int x,int y) {
+    coord.X=y - 1;
+    coord.Y=x - 1;
+    SetConsoleCursorPosition(hout,coord);
+}
+void print_map() {
